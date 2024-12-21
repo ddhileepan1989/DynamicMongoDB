@@ -14,12 +14,9 @@ public class DataSourceConfigEntity {
 
     @Id
     private String id;  // MongoDB _id, e.g., tenant1, tenant2
-    private String url;
-    private String username;
-    private String password;
-    private String driverClassName;
+    private String dbConnectionString;
     private String dbName;
-    public DataSourceConfigEntity() {
 
+    public DataSourceConfigEntity() {
     }
 }

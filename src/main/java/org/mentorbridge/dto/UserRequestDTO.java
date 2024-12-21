@@ -7,8 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class DatabaseDTO {
-    private String connectionString;
+public class UserRequestDTO {
     private String dbName;
     private String email;
 }

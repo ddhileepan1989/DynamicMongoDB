@@ -1,7 +1,8 @@
 package org.mentorbridge.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.mentorbridge.dto.DatabaseDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.mentorbridge.dto.UserRequestDTO;
 import org.mentorbridge.service.DynamicDatabaseService;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,23 +10,24 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class DynamicDatabaseController {
+@Slf4j
+public class UserController {
 
 
     private final DynamicDatabaseService dynamicDatabaseService;
 
     @PostMapping("/signUp")
-    public String createDatabase(@RequestBody DatabaseDTO databaseDTO) {
-        System.out.println("DatabaseDTO : " + databaseDTO.toString());
+    public String createDatabase(@RequestBody UserRequestDTO userRequestDTO) {
+        log.info("userRequestDTO : {}", userRequestDTO.toString());
         dynamicDatabaseService.createDatabaseWithTemplate(
-                databaseDTO.getDbName(),
-                databaseDTO.getEmail());
+                userRequestDTO.getDbName(),
+                userRequestDTO.getEmail());
         return "Created";
     }
 
     @GetMapping("/login/{email}")
     public List<String> login(@PathVariable String email) {
-        System.out.println("email : " + email);
+        log.info("email : {}", email);
         return dynamicDatabaseService.readMongoTemplate(email);
     }
 }
