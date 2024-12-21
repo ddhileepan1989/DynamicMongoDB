@@ -28,5 +28,4 @@ class DynamicDatabaseApplicationTests {
         String plaintext = "mongodb+srv://dhilprojects:Q19R8CduAFVD9JmO@cluster0.051e3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
         System.out.println("Encrypted key : " + encryptor.encrypt(plaintext));
     }
-
 }

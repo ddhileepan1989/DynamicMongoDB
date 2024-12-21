@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DataSourceConfigEntity {
 
     @Id
-    private String id;  // MongoDB _id, e.g., tenant1, tenant2
+    private String id;
     private String dbConnectionString;
     private String dbName;
 
