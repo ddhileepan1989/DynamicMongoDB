@@ -1,19 +1,16 @@
-package org.mentorbridge;
+package org.mentorbridge.config;
 
+import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootTest
-class DynamicDatabaseApplicationTests {
+@Configuration
+public class JasyptEncryptorConfig {
 
-    @Test
-    void contextLoads() {
-    }
-
-    @Test
-    void testEncryptionKey() {
+    @Bean(name = "jasyptStringEncryptor")
+    public StringEncryptor passwordEncryptor(){
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword("key-mentorbridge"); // encryptor's private key
@@ -24,9 +21,6 @@ class DynamicDatabaseApplicationTests {
         config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
-
-        String plaintext = "mongodb+srv://dhilprojects:Q19R8CduAFVD9JmO@cluster0.051e3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-        System.out.println("Encrypted key : " + encryptor.encrypt(plaintext));
+        return  encryptor;
     }
-
 }
