@@ -9,6 +9,7 @@ import org.mentorbridge.entity.OrganizationEntity;
 import org.mentorbridge.repository.DataSourceConfigRepository;
 import org.mentorbridge.utilities.DBUtility;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -91,7 +92,11 @@ public class DynamicDatabaseService {
      * @return The database name associated with the given email.
      * @throws DatabaseNotFoundException if no DataSource configuration is found for the provided email.
      */
+
+    @Cacheable(value = "dbNames", key = "#email")
     public String findDBNameByEmailFromSourceDirectory(String email) {
+
+        log.info("entered in findDBNameByEmailFromSourceDirectory()");
         // Attempt to fetch the DataSource configuration from the repository using the email
         return dataSourceConfigRepository.findById(email)
                 .map(DataSourceConfigEntity::getDbName)  // If found, map to the dbName field

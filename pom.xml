@@ -63,6 +63,7 @@
 			<version>3.14.0</version>
 		</dependency>
 
+		<!-- Jasypt encryption/decryption-->
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>jasypt-spring-boot-starter</artifactId>
@@ -74,7 +75,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
