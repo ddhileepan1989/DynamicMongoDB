@@ -39,7 +39,7 @@ public class UserController {
             }
 
             // Proceed with database creation and user initialization
-            dynamicDatabaseService.createDatabaseWithTemplate(
+            dynamicDatabaseService.createDatabaseByOrganization(
                     requestDTO.getDbName(),
                     requestDTO.getEmail());
 
@@ -66,8 +66,11 @@ public class UserController {
     public ResponseEntity<Object> login(@PathVariable String email) {
         log.info("Login attempt for email: {}", email);
 
+        //Find the DB name by email
+        String dbName = dynamicDatabaseService.findDBNameByEmailFromSourceDirectory(email);
+
         // Fetch the organization entity wrapped in Optional
-        Optional<OrganizationEntity> organizationOptional = dynamicDatabaseService.findDocumentsByEmailInDatabase(email);
+        Optional<OrganizationEntity> organizationOptional = dynamicDatabaseService.findOrganizationByEmail(dbName, email);
 
         // If organization is found, return 200 OK
         if (organizationOptional.isPresent()) {
