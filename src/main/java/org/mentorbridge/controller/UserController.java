@@ -1,5 +1,10 @@
 package org.mentorbridge.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mentorbridge.dto.RequestDTO;
@@ -26,6 +31,15 @@ public class UserController {
      * @return A response indicating the success or failure of the operation.
      */
     @PostMapping("/signUp")
+    @Operation(
+            summary = "Sign up a new user and create a database",
+            description = "This API endpoint allows the creation of a new database for the organization and performs user initialization with the provided details."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "SignUp completed successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input data (email or dbName is missing)", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class)))
+    })
     public ResponseEntity<Object> signUp(@RequestBody RequestDTO requestDTO) {
         log.info("Received request to create database: {}", requestDTO);
 
@@ -63,6 +77,14 @@ public class UserController {
      * @return The OrganizationEntity associated with the email, or 404 if not found.
      */
     @GetMapping("/login/{email}")
+    @Operation(
+            summary = "Login using email and retrieve organization details",
+            description = "This API endpoint allows users to login by email and fetch the associated organization details."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully found organization", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrganizationEntity.class))),
+            @ApiResponse(responseCode = "404", description = "Organization not found for the provided email", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class)))
+    })
     public ResponseEntity<Object> login(@PathVariable String email) {
         log.info("Login attempt for email: {}", email);
 
